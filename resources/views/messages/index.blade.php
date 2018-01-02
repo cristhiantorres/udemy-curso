@@ -2,6 +2,12 @@
 
 @section('content')
 
+<div class="page-header">
+
+  <h1>Mensajes <small>Recibidos</small></h1>
+
+</div>
+
 <table class="table table-hover">
 
   <thead>
@@ -34,11 +40,11 @@
 
       <td>
 
-        <a href="#" type="button" class="btn btn-primary">
+        <a href="#" type="button" class="btn btn-primary btn-xs">
           Editar
         </a>
 
-        <a href="#" type="button" class="btn btn-danger">
+        <a href="#" type="button" class="btn btn-danger btn-xs">
           Eliminar
         </a>
 

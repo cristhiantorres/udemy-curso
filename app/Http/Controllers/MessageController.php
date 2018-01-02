@@ -8,6 +8,15 @@ use App\Http\Requests\CreateMessageRequest;
 
 class MessageController extends Controller
 {
+
+    public function __construct()
+    {
+      
+      $this->middleware('auth');
+      $this->middleware('roles:admin');
+
+    }
+
     /**
      * Display a listing of the resource.
      *

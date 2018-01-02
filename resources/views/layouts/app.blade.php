@@ -37,6 +37,7 @@
           <!-- Left Side Of Navbar -->
           <ul class="nav navbar-nav">
             &nbsp;
+            <li class="{{ request()->is('messages') ? 'active' : ' ' }}"><a href="{{ route('messages.index') }}">Mensajes</a></li>
           </ul>
 
           <!-- Right Side Of Navbar -->

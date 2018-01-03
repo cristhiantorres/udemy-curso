@@ -27,12 +27,12 @@ class User extends Authenticatable
       'password', 'remember_token',
     ];
 
-    public function role()
+    public function roles()
     {
       
-      return $this->belongsTo(Role::class);
+      return $this->belongsToMany(Role::class, 'assigned_roles');
 
-    }
+      }
 
     public function hasRoles(array $roles)
     {

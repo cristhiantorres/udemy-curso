@@ -17,3 +17,5 @@ Route::get('/', 'HomeController@index')->name('home');
 
 
 Route::resource('messages', 'MessageController');
+
+Route::resource('users', 'UserController');

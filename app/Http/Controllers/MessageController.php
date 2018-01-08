@@ -9,13 +9,13 @@ use App\Http\Requests\UpdateMessageRequest;
 
 class MessageController extends Controller
 {
-  
+
 
   public function __construct()
   {
 
-    $this->middleware('auth');
-    $this->middleware('roles:admin');
+    $this->middleware('auth')->except(['store', 'create']);
+    $this->middleware('roles:admin')->except(['store', 'create']);
 
   }
 
@@ -50,6 +50,13 @@ class MessageController extends Controller
     $type = '';
 
     if ( $message->create( $request->all() ) ) {
+
+
+      if (auth()->check()) {
+
+        auth()->user()->messages()->save($message);
+
+      }
 
       $status = 'Mensaje enviado correctamente';
 

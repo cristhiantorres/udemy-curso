@@ -5,9 +5,9 @@ use Faker\Generator as Faker;
 $factory->define(App\Role::class, function (Faker $faker) {
     return [
 
-        'name' => 'admin',
+        'name' => 'student',
 
-        'display_name' => 'Administrador del Sitio',
+        'display_name' => 'Usuario Estudiante',
       
     ];
 });

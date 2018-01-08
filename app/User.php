@@ -15,7 +15,9 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
+
       'name', 'email', 'password',
+
     ];
 
     /**
@@ -24,8 +26,18 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
+
       'password', 'remember_token',
+
     ];
+
+    public function setPasswordAttribute($password)
+    {
+      
+      $this->attributes['password'] = bcrypt($password);
+
+    }
+
 
     public function roles()
     {
@@ -34,25 +46,34 @@ class User extends Authenticatable
 
     }
 
+    public function messages()
+    {
+      
+      return $this->hasMany(Message::class);
+
+    }
+
     public function hasRoles(array $roles)
     {
 
-      foreach ($roles as $role) {
-
-        foreach ($this->roles as $userRole) {
-
-          if ($userRole->name === $role) {
-
-            return true;
-
-          }
-          
-        }
-
-      }
-
-      return false;
+      return $this->roles->pluck('name')->intersect($roles)->count();
 
     }
+
+
+    public function isAdmin()
+    {
+
+      return $this->hasRoles(['admin']);
+
+    }
+
+    public function note()
+    {
+      
+      $this->morphOne(Note::class, 'notable');
+
+    }
+
 
   }

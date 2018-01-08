@@ -54,7 +54,7 @@
             <li class="{{ request()->is('messages*') ? 'active' : ' ' }}"><a href="{{ route('messages.index') }}">Mensajes</a></li>
             
             <li class="{{ request()->is('users*') ? 'active' : ' ' }}"><a href="{{ route('users.index') }}">Usuarios</a></li>
-          
+
           </ul>
 
           <!-- Right Side Of Navbar -->
@@ -83,6 +83,16 @@
               </a>
 
               <ul class="dropdown-menu">
+
+                <li>
+
+                  <a href="{{ route('users.edit', [ 'user' => auth()->id() ] ) }}" role="button">
+
+                    Mi cuenta
+                  
+                  </a>
+
+                </li>
 
                 <li>
 

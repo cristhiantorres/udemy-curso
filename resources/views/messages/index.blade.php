@@ -44,7 +44,9 @@
       <td>
 
         <a href="{{ route('messages.edit', [ 'message' => $message->id ] ) }}" type="button" class="btn btn-primary btn-xs">
+       
           Editar
+       
         </a>
 
         <form action="{{ route('messages.destroy', [ 'messages' => $message->id ] ) }}" style="display: inline;" method="POST">

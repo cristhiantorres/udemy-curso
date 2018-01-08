@@ -28,7 +28,7 @@
   </thead>
 
   <tbody>
-    
+
     @foreach ($users as $user)
 
     <tr>
@@ -59,11 +59,15 @@
 
         </a>
 
-        <a class="btn btn-danger btn-xs" href="{{ route('users.edit', [ 'user' => $user->id ] ) }}" role="button">
+        <form action="{{ route('users.destroy', [ 'user' => $user->id ] ) }}" style="display: inline;" method="POST">
 
-          Eliminar
+          {{ csrf_field() }}
 
-        </a>
+          {{ method_field('DELETE') }}
+
+          <button type="submit" class="btn btn-danger btn-xs">Eliminar</button>    
+
+        </form>
         
       </td>
       

@@ -2,28 +2,17 @@
 
 @section('content')
 
+<div class="page-header">
+  <h1>Usuarios <small>Editar {{ $user->name }}</small></h1>
+</div>
+
 <form action="{{ route('users.update', [ 'user' => $user->id ] ) }}" method="POST" class="form-horizontal" role="form">
 
-  <div class="form-group">
-
-    <legend>Actualizar - {{ $user->name }}</legend>
-
-  </div>
-
-
+  {{ csrf_field() }}
   
+  {{ method_field('PATCH') }}
+
   @include('users.partials.fields')
-
-
-  <div class="form-group">
-
-    <div class="col-sm-10 col-sm-offset-2">
-
-      <button type="submit" class="btn btn-primary">Actualizar</button>
-
-    </div>
-
-  </div>
   
 </form>
 

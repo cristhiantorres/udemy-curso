@@ -30,7 +30,7 @@ class CreateMessageRequest extends FormRequest
 
         'name' => 'required',
 
-        'email' => 'required|unique:messages',
+        'email' => 'required',
 
         'text' => 'required|min:5',
       ];

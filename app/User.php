@@ -29,10 +29,10 @@ class User extends Authenticatable
 
     public function roles()
     {
-      
+
       return $this->belongsToMany(Role::class, 'assigned_roles');
 
-      }
+    }
 
     public function hasRoles(array $roles)
     {
@@ -42,13 +42,12 @@ class User extends Authenticatable
         foreach ($this->roles as $userRole) {
 
           if ($userRole->name === $role) {
-            
+
             return true;
 
           }
-
+          
         }
-        
 
       }
 

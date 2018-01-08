@@ -19,17 +19,16 @@
 
       <th>Nombre</th>
 
-      <th>Email</th>
+      <th>Correo Electronico</th>
 
       <th>Roles</th>
-
-      <th>Acciones</th>
 
     </tr>
 
   </thead>
 
   <tbody>
+    
     @foreach ($users as $user)
 
     <tr>
@@ -61,7 +60,7 @@
         </a>
 
         <a class="btn btn-danger btn-xs" href="{{ route('users.edit', [ 'user' => $user->id ] ) }}" role="button">
-          
+
           Eliminar
 
         </a>
@@ -69,6 +68,7 @@
       </td>
       
     </tr>
+
     @endforeach
 
   </tbody>

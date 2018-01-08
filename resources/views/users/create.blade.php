@@ -2,13 +2,13 @@
 
 @section('content')
 
+<div class="page-header">
+  
+  <h1>Usuario <small>Crear</small></h1>
+
+</div>
+
 <form action="{{ route('users.store') }}" method="POST" class="form-horizontal" role="form">
-
-  <div class="form-group">
-
-    <legend>Crear</legend>
-
-  </div>
 
   {{ csrf_field() }}
 

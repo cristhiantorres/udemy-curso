@@ -2,13 +2,11 @@
 
 @section('content')
 
+<div class="page-header">
+  <h1>Mensaje<small> Enviar</small></h1>
+</div>
+
 <form action="{{ route('messages.store') }}" method="POST" class="form-horizontal" role="form">
-
-  <div class="form-group">
-
-    <legend>Enviar Mensaje</legend>
-
-  </div>
 
   {{ csrf_field() }}
 

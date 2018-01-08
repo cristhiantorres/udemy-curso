@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use App\Http\Requests\UserCreateRequest;
+
 
 class UserController extends Controller
 {
@@ -39,7 +41,7 @@ class UserController extends Controller
   }
 
   
-  public function store(Request $request)
+  public function store(UserCreateRequest $request)
   {
         //
   }

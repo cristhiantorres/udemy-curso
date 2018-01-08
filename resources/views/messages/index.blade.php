@@ -6,14 +6,8 @@
 
   <h1>Mensajes <small>Recibidos</small></h1>
 
-</div>
+  <a href="{{ route('messages.create') }}" class="btn btn-primary">Crear</a>
 
-<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-
-  <a href="{{ route('messages.create') }}" class="btn btn-primary">Nuevo</a>
-
-  <hr>
-  
 </div>
 
 
@@ -49,14 +43,20 @@
 
       <td>
 
-        <a href="#" type="button" class="btn btn-primary btn-xs">
+        <a href="{{ route('messages.edit', [ 'message' => $message->id ] ) }}" type="button" class="btn btn-primary btn-xs">
           Editar
         </a>
 
-        <a href="#" type="button" class="btn btn-danger btn-xs">
-          Eliminar
-        </a>
+        <form action="{{ route('messages.destroy', [ 'messages' => $message->id ] ) }}" style="display: inline;" method="POST">
+          
+          {{ csrf_field() }}
 
+          {{ method_field('DELETE') }}
+
+          <button type="submit" class="btn btn-danger btn-xs">Eliminar</button>    
+
+        </form>
+      
       </td>
 
     </tr>

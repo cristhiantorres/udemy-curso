@@ -37,7 +37,10 @@
           <!-- Left Side Of Navbar -->
           <ul class="nav navbar-nav">
             &nbsp;
-            <li class="{{ request()->is('messages') ? 'active' : ' ' }}"><a href="{{ route('messages.index') }}">Mensajes</a></li>
+            <li class="{{ request()->is('messages*') ? 'active' : ' ' }}"><a href="{{ route('messages.index') }}">Mensajes</a></li>
+            
+            <li class="{{ request()->is('users*') ? 'active' : ' ' }}"><a href="{{ route('users.index') }}">Usuarios</a></li>
+          
           </ul>
 
           <!-- Right Side Of Navbar -->
@@ -94,5 +97,10 @@
 
 <!-- Scripts -->
 <script src="{{ asset('js/app.js') }}"></script>
+<script src="{{ asset('js/jquery.js') }}"></script>
+
+@yield('script')
+
+
 </body>
 </html>

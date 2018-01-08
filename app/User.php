@@ -38,12 +38,17 @@ class User extends Authenticatable
     {
 
       foreach ($roles as $role) {
-        
-        if ($this->role->name === $role) {
-          
-          return true;
+
+        foreach ($this->roles as $userRole) {
+
+          if ($userRole->name === $role) {
+            
+            return true;
+
+          }
 
         }
+        
 
       }
 

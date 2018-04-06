@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMessagesTable extends Migration
+class CreateTaggablesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,21 +13,18 @@ class CreateMessagesTable extends Migration
      */
     public function up()
     {
-    
-        Schema::create('messages', function (Blueprint $table) {
-    
+        Schema::create('taggables', function (Blueprint $table) {
+            
             $table->increments('id');
-    
-            $table->string('name')->nullable();
-    
-            $table->string('email')->nullable();
-    
-            $table->text('text');
-    
+
+            $table->integer('tag_id')->unsigned();
+
+            $table->integer('taggable_id')->unsigned();
+
+            $table->integer('taggable_type')->unsigned();
+            
             $table->timestamps();
-    
         });
-    
     }
 
     /**
@@ -37,6 +34,6 @@ class CreateMessagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('messages');
+        Schema::dropIfExists('taggables');
     }
 }

@@ -97,7 +97,7 @@ class UserController extends Controller
   public function update(UserUpdateRequest $request, $id)
   {
 
-    $user = User::findOrFail($id);
+    $user = User::find($id);
 
     $this->authorize('update', $user);
 

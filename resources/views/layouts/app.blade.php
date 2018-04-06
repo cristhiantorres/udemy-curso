@@ -48,13 +48,17 @@
 
           <!-- Left Side Of Navbar -->
           <ul class="nav navbar-nav">
-
             &nbsp;
-
-            <li class="{{ request()->is('messages*') ? 'active' : ' ' }}"><a href="{{ route('messages.index') }}">Mensajes</a></li>
             
-            <li class="{{ request()->is('users*') ? 'active' : ' ' }}"><a href="{{ route('users.index') }}">Usuarios</a></li>
+            @auth
+              
+            <li class="{{ request()->is('messages*') ? 'active' : ' ' }}"><a href="{{ route('messages.index') }}">Mensajes</a></li>
+              
+            <li class="{{ request()->is('users*') ? 'active' : ' ' }}"><a href="{{ route('users.index') }}">Usuarios</a></li>            
+            
+            @endauth
 
+            
           </ul>
 
           <!-- Right Side Of Navbar -->
@@ -89,7 +93,7 @@
                   <a href="{{ route('users.edit', [ 'user' => auth()->id() ] ) }}" role="button">
 
                     Mi cuenta
-                  
+                    
                   </a>
 
                 </li>
@@ -145,6 +149,7 @@
 </div>
 
 <!-- Scripts -->
+
 <script src="{{ asset('js/app.js') }}"></script>
 
 <script src="{{ asset('js/jquery.js') }}"></script>

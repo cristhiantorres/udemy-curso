@@ -3,27 +3,33 @@
 namespace App\Http\Controllers;
 
 use App\Message;
-use Illuminate\Http\Request;
+use App\Repositories\CacheMessages;
+use App\Repositories\Messages;
+use App\Events\MessageWasReceived;
 use App\Http\Requests\CreateMessageRequest;
 use App\Http\Requests\UpdateMessageRequest;
 
 class MessageController extends Controller
 {
+  protected $messages;
 
 
-  public function __construct()
+
+  public function __construct(Messages $messages)
   {
 
     $this->middleware('auth')->except(['store', 'create']);
+    
     $this->middleware('roles:admin')->except(['store', 'create']);
 
+    $this->messages = $messages;
   }
 
 
   public function index()
-  {
+  {   
 
-    $messages = Message::all();
+    $messages = $this->messages->getPaginated();
 
     return view('messages.index', compact('messages'));
 
@@ -43,21 +49,17 @@ class MessageController extends Controller
   public function store(CreateMessageRequest $request)
   {
 
-    $message = new Message;
-
     $status = '';
 
     $type = '';
 
-    if ( $message->create( $request->all() ) ) {
+    $message = $this->messages->store($request);
 
+    if ($message) {
 
-      if (auth()->check()) {
-
-        auth()->user()->messages()->save($message);
-
-      }
-
+      // Evento se encarga de notificar mails
+      event(new MessageWasReceived($message));
+      
       $status = 'Mensaje enviado correctamente';
 
       $type = 'success';
@@ -67,16 +69,18 @@ class MessageController extends Controller
       $status = 'Ocurrio un error';
 
       $type = 'danger';
-
     }
 
-    return back()->with( [ 'status' => $status, 'type' => $type ] );
+    return redirect()->route('messages.index')->with( [ 'status' => $status, 'type' => $type ] );
 
   }
 
 
   public function edit(Message $message)
   {
+
+    $message = $this->messages->findById($message);
+
 
     return view('messages.edit', compact('message'));
 
@@ -90,7 +94,10 @@ class MessageController extends Controller
 
     $type = '';
 
-    if ( $message->update( $request->all() ) ) {
+    $message = $this->messages->update($request, $message);
+
+    if ($message) {
+
 
       $status = 'Mensaje actualizado correctamente';
 
@@ -115,7 +122,9 @@ class MessageController extends Controller
 
     $type = '';
 
-    if ( $message->delete() ) {
+    $message = $this->messages->destroy($message);
+
+    if ($message) {
 
       $status = 'Mensaje eliminado correctamente';
 

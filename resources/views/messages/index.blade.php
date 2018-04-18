@@ -69,6 +69,8 @@
 
     @endforelse
 
+    {{ $messages->links() }}
+
   </tbody>
 
 </table>    

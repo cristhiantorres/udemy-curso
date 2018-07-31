@@ -2,12 +2,12 @@
 
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-  use Notifiable;
+    use Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -33,47 +33,31 @@ class User extends Authenticatable
 
     public function setPasswordAttribute($password)
     {
-      
-      $this->attributes['password'] = bcrypt($password);
-
+        $this->attributes['password'] = bcrypt($password);
     }
-
 
     public function roles()
     {
-
-      return $this->belongsToMany(Role::class, 'assigned_roles');
-
+        return $this->belongsToMany(Role::class, 'assigned_roles');
     }
 
     public function messages()
     {
-      
-      return $this->hasMany(Message::class);
-
+        return $this->hasMany(Message::class);
     }
 
     public function hasRoles(array $roles)
     {
-
-      return $this->roles->pluck('name')->intersect($roles)->count();
-
+        return $this->roles->pluck('name')->intersect($roles)->count();
     }
-
 
     public function isAdmin()
     {
-
-      return $this->hasRoles(['admin']);
-
+        return $this->hasRoles(['admin']);
     }
 
     public function note()
     {
-      
-      $this->morphOne(Note::class, 'notable');
-
+        $this->morphOne(Note::class, 'notable');
     }
-
-
-  }
+}

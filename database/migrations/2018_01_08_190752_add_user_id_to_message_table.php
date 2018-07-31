@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class AddUserIdToMessageTable extends Migration
 {
@@ -13,11 +13,9 @@ class AddUserIdToMessageTable extends Migration
      */
     public function up()
     {
-      Schema::table('messages', function (Blueprint $table) {
-
-        $table->integer('user_id')->nullable();
-
-      });
+        Schema::table('messages', function (Blueprint $table) {
+            $table->integer('user_id')->nullable();
+        });
     }
 
     /**
@@ -27,10 +25,8 @@ class AddUserIdToMessageTable extends Migration
      */
     public function down()
     {
-      Schema::table('messages', function (Blueprint $table) {
-        
-        $table->dropColumn('user_id');
-
-      });
+        Schema::table('messages', function (Blueprint $table) {
+            $table->dropColumn('user_id');
+        });
     }
-  }
+}

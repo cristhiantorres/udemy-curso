@@ -13,7 +13,7 @@ class UpdateMessageRequest extends FormRequest
      */
     public function authorize()
     {
-      return true;
+        return true;
     }
 
     /**
@@ -23,7 +23,7 @@ class UpdateMessageRequest extends FormRequest
      */
     public function rules()
     {
-      return [
+        return [
 
         'name' => 'required',
 
@@ -32,4 +32,4 @@ class UpdateMessageRequest extends FormRequest
         'text' => 'required|min:5',
       ];
     }
-  }
+}

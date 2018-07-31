@@ -15,20 +15,18 @@ class MessageTableSeeder extends Seeder
     {
         Message::truncate();
 
-        for ($i=1; $i < 101; $i++) { 
-          
-          Message::create([
+        for ($i = 1; $i < 101; $i++) {
+            Message::create([
 
             'name'  => "Usuario $i",
 
-            'email' =>  "usuario$i@correo.com",
+            'email' => "usuario$i@correo.com",
 
-            'text'  =>  "Este texto es del mensaje del Usuario $i",
+            'text'  => "Este texto es del mensaje del Usuario $i",
 
             'created_at'  => Carbon::now()->subDays(100)->addDays($i),
 
           ]);
-
         }
     }
 }

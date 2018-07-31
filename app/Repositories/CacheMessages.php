@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Repositories;
 
@@ -6,68 +6,51 @@ use Cache;
 
 class CacheMessages
 {
-  private $messages;
+    private $messages;
 
-  public function __construct(Messages $messages)
-  {
-    $this->messages = $messages;
-  }
+    public function __construct(Messages $messages)
+    {
+        $this->messages = $messages;
+    }
 
-  public function getPaginated()
-  {
+    public function getPaginated()
+    {
+        $key = 'messages.page.'.request('page', 1);
 
+        return Cache::tags('messages')->rememberForever($key, function () {
+            return $this->messages->getPaginated();
+        });
+    }
 
-    $key = "messages.page." . request('page', 1);
+    public function store($request)
+    {
+        $message = $this->messages->store($request);
 
-    return Cache::tags('messages')->rememberForever($key, function () {
+        Cache::tags('messages')->flush();
 
-      return $this->messages->getPaginated();
+        return $message;
+    }
 
-    });
-
-
-  }
-
-
-  public function store($request)
-  {
-
-    $message = $this->messages->store($request);
-
-    Cache::tags('messages')->flush();
-
-    return $message;
-
-  }
-
-  public function findById($message)
-  {
-
-    return Cache::tags('messages')->rememberForever("message.$message->id", 
+    public function findById($message)
+    {
+        return Cache::tags('messages')->rememberForever("message.$message->id",
 
       function () use ($message) {
-
-        return $this->messages->findById($message);
-
+          return $this->messages->findById($message);
       });
+    }
 
-  }
+    public function update($request, $message)
+    {
+        Cache::tags('messages')->flush();
 
-  public function update($request, $message)
-  {
+        return $this->messages->update($request, $message);
+    }
 
-    Cache::tags('messages')->flush();
+    public function destroy($message)
+    {
+        Cache::tags('messages')->flush();
 
-    return $this->messages->update($request, $message);
-
-  }
-
-
-  public function destroy($message)
-  {
-    Cache::tags('messages')->flush();
-
-    return $this->messages->destroy($message);
-    
-  }
+        return $this->messages->destroy($message);
+    }
 }

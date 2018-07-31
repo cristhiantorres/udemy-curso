@@ -10,8 +10,6 @@ class Tag extends Model
 
     public function messages()
     {
-      
-      return $this->morphByMany(Message::class, 'taggable');
-
+        return $this->morphByMany(Message::class, 'taggable');
     }
 }

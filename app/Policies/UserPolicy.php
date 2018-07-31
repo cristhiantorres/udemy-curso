@@ -7,36 +7,27 @@ use Illuminate\Auth\Access\HandlesAuthorization;
 
 class UserPolicy
 {
-  use HandlesAuthorization;
+    use HandlesAuthorization;
 
-  public function __construct()
-  {
+    public function __construct()
+    {
         //
-  }
-
-  public function before($user, $ability)
-  {
-    
-    if ( $user->isAdmin() ) {
-      
-      return true;
-
     }
 
-  }
+    public function before($user, $ability)
+    {
+        if ($user->isAdmin()) {
+            return true;
+        }
+    }
 
-  public function edit(User $authUser, User $user)
-  {
+    public function edit(User $authUser, User $user)
+    {
+        return $authUser->id === $user->id;
+    }
 
-    return $authUser->id === $user->id;
-
-  }
-
-  public function update(User $authUser, User $user)
-  {
-
-    return $authUser->id === $user->id;
-
-  }
-
+    public function update(User $authUser, User $user)
+    {
+        return $authUser->id === $user->id;
+    }
 }

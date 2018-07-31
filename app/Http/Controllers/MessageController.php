@@ -2,144 +2,110 @@
 
 namespace App\Http\Controllers;
 
-use App\Message;
-use App\Repositories\CacheMessages;
-use App\Repositories\Messages;
 use App\Events\MessageWasReceived;
 use App\Http\Requests\CreateMessageRequest;
 use App\Http\Requests\UpdateMessageRequest;
+use App\Message;
+use App\Repositories\Messages;
 
 class MessageController extends Controller
 {
-  protected $messages;
+    protected $messages;
 
+    public function __construct(Messages $messages)
+    {
+        $this->middleware('auth')->except(['store', 'create']);
 
+        $this->middleware('roles:admin')->except(['store', 'create']);
 
-  public function __construct(Messages $messages)
-  {
+        $this->messages = $messages;
+    }
 
-    $this->middleware('auth')->except(['store', 'create']);
-    
-    $this->middleware('roles:admin')->except(['store', 'create']);
+    public function index()
+    {
+        $messages = $this->messages->getPaginated();
 
-    $this->messages = $messages;
-  }
+        return view('messages.index', compact('messages'));
+    }
 
+    public function create()
+    {
+        $message = new Message();
 
-  public function index()
-  {   
+        return view('messages.create', compact('message'));
+    }
 
-    $messages = $this->messages->getPaginated();
+    public function store(CreateMessageRequest $request)
+    {
+        $status = '';
 
-    return view('messages.index', compact('messages'));
+        $type = '';
 
-  }
+        $message = $this->messages->store($request);
 
-
-  public function create()
-  {
-
-    $message = new Message;
-
-    return view('messages.create', compact('message'));
-
-  }
-
-
-  public function store(CreateMessageRequest $request)
-  {
-
-    $status = '';
-
-    $type = '';
-
-    $message = $this->messages->store($request);
-
-    if ($message) {
+        if ($message) {
 
       // Evento se encarga de notificar mails
-      event(new MessageWasReceived($message));
-      
-      $status = 'Mensaje enviado correctamente';
+            event(new MessageWasReceived($message));
 
-      $type = 'success';
+            $status = 'Mensaje enviado correctamente';
 
-    } else {
+            $type = 'success';
+        } else {
+            $status = 'Ocurrio un error';
 
-      $status = 'Ocurrio un error';
+            $type = 'danger';
+        }
 
-      $type = 'danger';
+        return redirect()->route('messages.index')->with(['status' => $status, 'type' => $type]);
     }
 
-    return redirect()->route('messages.index')->with( [ 'status' => $status, 'type' => $type ] );
+    public function edit(Message $message)
+    {
+        $message = $this->messages->findById($message);
 
-  }
-
-
-  public function edit(Message $message)
-  {
-
-    $message = $this->messages->findById($message);
-
-
-    return view('messages.edit', compact('message'));
-
-  }
-
-
-  public function update(UpdateMessageRequest $request, Message $message)
-  {
-
-    $status = '';
-
-    $type = '';
-
-    $message = $this->messages->update($request, $message);
-
-    if ($message) {
-
-
-      $status = 'Mensaje actualizado correctamente';
-
-      $type = 'success';
-
-    } else {
-
-      $status = 'Ocurrio un error';
-
-      $type = 'danger';
-
+        return view('messages.edit', compact('message'));
     }
 
-    return back()->with( [ 'status' => $status, 'type' => $type ] );
-  }
+    public function update(UpdateMessageRequest $request, Message $message)
+    {
+        $status = '';
 
+        $type = '';
 
-  public function destroy(Message $message)
-  {
+        $message = $this->messages->update($request, $message);
 
-    $status = '';
+        if ($message) {
+            $status = 'Mensaje actualizado correctamente';
 
-    $type = '';
+            $type = 'success';
+        } else {
+            $status = 'Ocurrio un error';
 
-    $message = $this->messages->destroy($message);
+            $type = 'danger';
+        }
 
-    if ($message) {
-
-      $status = 'Mensaje eliminado correctamente';
-
-      $type = 'success';
-
-    } else {
-
-      $status = 'Ocurrio un error';
-
-      $type = 'danger';
-
+        return back()->with(['status' => $status, 'type' => $type]);
     }
 
-    return back()->with( [ 'status' => $status, 'type' => $type ] );
+    public function destroy(Message $message)
+    {
+        $status = '';
 
-  }
+        $type = '';
 
+        $message = $this->messages->destroy($message);
+
+        if ($message) {
+            $status = 'Mensaje eliminado correctamente';
+
+            $type = 'success';
+        } else {
+            $status = 'Ocurrio un error';
+
+            $type = 'danger';
+        }
+
+        return back()->with(['status' => $status, 'type' => $type]);
+    }
 }

@@ -11,18 +11,16 @@
 |
 */
 
-
 /*DB::listen(function ($query)
 {
 
   echo "<pre>{$query->sql}</pre>";
-  
+
 });*/
 
 Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
-
 
 Route::resource('messages', 'MessageController');
 

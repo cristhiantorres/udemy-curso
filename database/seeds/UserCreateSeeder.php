@@ -25,7 +25,7 @@ class UserCreateSeeder extends Seeder
 
           'email'     => 'admin@correo.com',
 
-          'password'  => bcrypt('admin123')
+          'password'  => bcrypt('admin123'),
 
         ]);
 
@@ -33,10 +33,9 @@ class UserCreateSeeder extends Seeder
 
           'name'          => 'admin',
 
-          'display_name'  => 'Administrador del Sitio'
+          'display_name'  => 'Administrador del Sitio',
 
         ]);
-
 
         $user->roles()->attach($role);
     }

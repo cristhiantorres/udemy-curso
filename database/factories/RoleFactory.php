@@ -8,6 +8,6 @@ $factory->define(App\Role::class, function (Faker $faker) {
         'name' => 'student',
 
         'display_name' => 'Usuario Estudiante',
-      
+
     ];
 });
